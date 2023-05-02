@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Wishlist Дани и Кати</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{{ url_for('home') }}">Wishlist Дани и Кати</a>
+      <div class="navbar-nav">
+        {% if current_user.is_authenticated %}
+          <a class="nav-item nav-link" href="{{ url_for('add_gift') }}">Добавить подарок</a>
+          <a class="nav-item nav-link" href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+          <a class="nav-item nav-link" href="{{ url_for('login') }}">Войти</a>
+          <a class="nav-item nav-link" href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+      </div>
+    </nav>
+    <main class="container mt-5">
+      {% for message in get_flashed_messages() %}
+        <div class="alert alert-info">{{ message }}</div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+    </main>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  </body>
+</html>

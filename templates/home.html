@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="giftModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="giftModalLabel">Gift Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="description">Gift description</p>
+          <p><a href="#" class="link" target="_blank">Gift link</a></p>
+          <p class="price">Цена: 0.00€</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1>Идеи для подарков</h1>
+  <div class="row">
+    {% for gift in gifts %}
+      <div class="col-md-4">
+        <div class="card mb-4 gift-card" data-link="{{ gift.link }}" data-price="{{ gift.price }}">
+          <img src="{{ url_for('static', filename='uploads/' + gift.image) }}" class="card-img-top" alt="{{ gift.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ gift.title }}</h5>
+            <p class="card-text" style="display:none;">{{ gift.description }}</p>
+            <p>Цена: {{ gift.price }}€</p>
+            {% if gift.reserved_by %}
+              <span class="badge badge-warning big-text">Зарезервировано</span>
+            {% else %}
+              <a href="{{ url_for('reserve_gift', gift_id=gift.id) }}" class="btn btn-primary">Резервация</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
